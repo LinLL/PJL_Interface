@@ -1,9 +1,0 @@
-Quick disclaimer: I claim no responsibility for the actions of those who use my code. The script is meant for using on your own networks or those you have permission to use. 
-
-This is a little project that I did for an honors project in a class of mine. I do have programming experience prior to making this, but I had no knowledge of the BASH scripting language. So I learned what I had to for what I wanted in this program. Excuse any bad syntax you see. Downloading nmap and zmap are recommended if you intend to use this program. This code has only been ran and tested on Ubuntu 14.04. Will not work as is on Windows or Mac. 
-
-The directory called pjllib is the Hijetter program, make sure that the directory and the script filebare in your home directory. Now for an explanation. This script works with the program called Hijetter. I do not own that program. If you would like to know more about it, please follow this link ~> http://www.phenoelit.org/hp/ .
-
-I made this file to automate scanning user-specified networks for unsecure HP Printer ports (9100). As those ip addresses are found, a new file is made and they're put into it. Once you are done changing options and messing around, you have the option to then run Hijetter. Assuming you correctly placed the files, or changed the file paths in the code, the script runs Hijetter using a text file it creates. The main functionality was to change the display message of the unsecure printer, to show which ones were unsecure. You also have the option to print to each of the unsecure printers. The program keeps running until you force quit or choose the Exit option. 
-
-I hope you enjoy it. I will try to work on another version, once I can test other functions of Hijetter via command line.
