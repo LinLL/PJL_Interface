@@ -1,0 +1,4 @@
+server 172.22.38.42
+connect
+message "My dream is to\nbecome a squirrel!"
+quit
