@@ -1,21 +1,5 @@
 #!/bin/bash
 
-#<one line to give the program's name and a brief idea of what it does.>
-#Copyright © 2015 Dakota Hunter Glassburn
-#
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation, either version 3 of the License, or
-#(at your option) any later version.
-#
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
-#
-#You should have received a copy of the GNU General Public License
-#along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 IP="0.0.0.0"            # IP to start scanning from
 SUB="0"                 # Subnet - How big of a range to scan
 MSG="Test"              # What will display on the printer
@@ -47,15 +31,13 @@ function map
 	select choice in $MAPS; do
 		if [ $choice == "zmap" ]; then
 			MAP=1
-			break
 		else
 			MAP=0
-			break
 		fi
 	done
 }
 
-function go
+function run
 {
 	if [ $MAP == 1 ]; then
 		sudo zmap -p 9100 -o output.txt $IP/$SUB
@@ -63,7 +45,9 @@ function go
 		nmap -p 9100 -oG - $IP/$SUB | grep "9100" | grep "open" | cut -d " " -f 2 > output.txt
 	fi	
 
-	cat "output.txt" | while read LINE
+	FILE="output.txt"
+
+	cat $FILE | while read LINE
 	do
 		cd ~/pjllib/pft
 		echo "server $LINE" > mypftscript.txt
@@ -76,32 +60,10 @@ function go
 	
 	sleep 1
 	clear
-	echo "Finished."
+	echo "Project Mayhem completed."
 	sleep 3
 	clear
-}
-
-function send
-{
-	clear
-	echo "How many copies would you like to print?"
-	read NUMBER
-	echo "Please enter the name of the file you want to print! (CORRECTLY)"
-	echo "Include file extension. Make sure its in home directory."
-	read PRINTFILE
-
-	if [ -f "output.txt" ]; then
-		cat "output.txt" | read LINE
-			lp -n $NUMBER $PRINTFILE
-	else
-		if [ $MAP == 1 ]; then
-			sudo zmap -p 9100 -o output.txt $IP/$SUB
-		else
-			nmap -p 9100 -oG - $IP/$SUB | grep "9100" | grep "open" | cut -d " " -f 2 > output.txt
-		fi
-		cat "output.txt" | read LINE
-			lp -n $NUMBER $PRINTFILE
-	fi
+	exit
 }
 
 OPTIONS="Change_IP Change_Message Change_Map Run_Script Print2Printer Exit"
@@ -125,10 +87,8 @@ while [ true ]; do
 				echo "IP and Subnet not set"
 				sleep 3
 			else
-				go
+				run
 			fi
-		elif [ $opt == "Print2Printer" ]; then
-			send
 		elif [ $opt == "Exit" ]; then
 			clear
 			exit
@@ -151,3 +111,6 @@ while [ true ]; do
 		echo "6) Exit"
 	done
 done
+
+# Things to get done:
+# 	Mess with other settings
